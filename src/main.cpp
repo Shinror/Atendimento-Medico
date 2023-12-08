@@ -53,7 +53,7 @@ int main(int argc, char** argv){
       }
     }
     if(comando == "sair"){
-      break;
+      break;//essa é a mudanca
       }//*caba com o  codigo
 
 
