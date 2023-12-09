@@ -8,12 +8,12 @@ struct Prontuario{
 
   Prontuario() = default;
 
-  Prontuario(std::string motivoconsulta, std::string sinais,std::string diagnostico, std::string observacao, std::string diadaconsulta,int cod);
+  Prontuario(std::string motivoconsulta, std::string sinais,std::string diagnostico, std::string observacao);
   Prontuario(nlohmann::json obj);
 
   nlohmann::json serializar();
 
   void Exibir();
-  void addRemdios(std::vector<std::string> remedios,std::vector<std::string> dosagem);
+  void addRemdios();
 
 };
