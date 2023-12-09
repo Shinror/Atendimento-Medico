@@ -1,8 +1,11 @@
 #include"json.hpp"
+#include "Prontuario.h"
 
+#include <vector>
 
 struct Paciente{
   std::string Nome, Email, CPF, DataNascimento, Alergias,Deficiencias;
+  std::vector<Prontuario> Prontuarios;
 
   Paciente() = default;
 
@@ -12,4 +15,6 @@ struct Paciente{
   nlohmann::json serializar();
 
   void Exibir();
+  void NovoProntuario();
+  void MostrarProntuarios();
 };
