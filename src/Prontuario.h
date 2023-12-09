@@ -4,7 +4,7 @@
 struct Prontuario{
   std::string MotivoConsulta, Sinais,Diagnostico, Observacao, DiaDaConsulta; 
   std::vector<std::string> Remedios, Doses;//* decidindo o q fazer
-  int Codigo;
+  long int Codigo;
 
   Prontuario() = default;
 
