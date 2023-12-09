@@ -3,7 +3,7 @@
 
 struct Prontuario{
   std::string MotivoConsulta, Sinais,Diagnostico, Observacao, DiaDaConsulta; 
-  std::vector<std::string> Remedios, Doses;//* decidindo o q fazer
+  std::vector<std::string> Remedios,Doses;
   long int Codigo;
 
   Prontuario() = default;
@@ -14,6 +14,6 @@ struct Prontuario{
   nlohmann::json serializar();
 
   void Exibir();
-  void addRemdios();
+  void addRemdios(std::string iremedio,std::string idose);
 
 };

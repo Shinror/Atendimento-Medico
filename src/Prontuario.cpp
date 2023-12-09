@@ -11,7 +11,7 @@ Prontuario::Prontuario(std::string motivoconsulta, std::string sinais,std::strin
   : MotivoConsulta(motivoconsulta), Sinais(sinais), Diagnostico(diagnostico),Observacao(observacao)
 {
   std::srand(std::time(NULL));
-  Codigo = std::rand() % 10000;
+  Codigo = std::rand() % 10000+1;
 
   time_t momento = time(nullptr);
   struct tm* timeInfo = localtime(&momento);
@@ -57,8 +57,8 @@ void Prontuario::Exibir(){
   std::cout<< "\nCodigo do Prontuario:"<<Codigo<<std::endl;
 }
 
-void Pronturaio::addRemdios(std::string iremedio,std::strings idose){
-  Remedios.push_bacK(iremedio);
-  Doses.push_bacK(idose);
+void Prontuario::addRemdios(std::string iremedio,std::string idose){
+  Remedios.push_back(iremedio);
+  Doses.push_back(idose);
 }
 
