@@ -15,6 +15,5 @@ struct Paciente{
   nlohmann::json serializar();
 
   void Exibir();
-  void NovoProntuario();
   void MostrarProntuarios();
 };

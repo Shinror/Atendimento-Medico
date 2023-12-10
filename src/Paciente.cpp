@@ -48,9 +48,7 @@ void Paciente::Exibir(){
   std::cout<<"As deficiencias do paciente: "<<Deficiencias <<std::endl;
 }
 
-void Paciente::NovoProntuario(){
 
-}
 void Paciente::MostrarProntuarios(){
   std::cout<<"> Prontuarios do "<< Nome <<std::endl;
   for(size_t i = 0 ; i < Prontuarios.size(); i++){
