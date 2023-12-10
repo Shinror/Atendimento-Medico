@@ -54,8 +54,7 @@ int main(int argc, char** argv){
     }
     if(comando == "sair"){
       break;//essa é a mudanca
-      }//*caba com o  codigo
-
+    }//*caba com o  codigo
 
 
 

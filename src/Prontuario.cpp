@@ -34,16 +34,18 @@ Prontuario::Prontuario(nlohmann::json obj){//deserializar
   Observacao =obj["Observação"];
   DiaDaConsulta = obj["Dia da consulta"];
   Codigo = obj["Codigo do Prontuario"];
-  /*
-  for (size_t i = 0; i < obj["Remedios"]; i++)//! ver com o professor
+  
+  
+  
+  for (auto reme : obj["Remedio"])
   {
-    Remedios.push_back(obj[{"Remedios",[i]}]);
+    Remedios.push_back(reme);
   }
-  for (size_t i = 0; i < obj["Doses"]; i++)
+  for (auto dose : obj["Doses"])
   {
-    Doses.push_back(obj{"Doses":[i]});
-  }*/
-
+    Doses.push_back(dose);
+  }
+  
 
 }
 
