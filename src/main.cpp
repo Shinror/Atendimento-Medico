@@ -18,7 +18,7 @@ int main(int argc, char** argv){
     std::getline(std::cin,comando);
 
     if(comando == "adicionar"){
-      std::cout<<">> O que deseja adicionar\npaciente ou prontuario \n=> "
+      std::cout<<">> O que deseja adicionar\npaciente ou prontuario \n=> ";
       std::getline(std::cin,comando);
       
       if(comando == "paciente"){
@@ -55,8 +55,8 @@ int main(int argc, char** argv){
         std::getline(std::cin,inpt);
         
         int info;
+        bool find = false;
         for(int i =0 ; i < Pacientes.size();i++){
-          bool find = false;
           
           if(inpt == Pacientes[i].CPF){
             info = i ;
@@ -86,8 +86,8 @@ int main(int argc, char** argv){
 
             std::cout<<">>> Area da prescrição"<<std::endl;
           while(true){
-            std::cout<< "Deseja adicionar um remedio [s,n]"
-            char afirma
+            std::cout<< "Deseja adicionar um remedio [s,n]";
+            char afirma;
             std::cin>>afirma;
 
             if(afirma == 'n' or afirma == 'N'){
@@ -105,7 +105,7 @@ int main(int argc, char** argv){
               std::getline(std::cin,rdosagem);
               
               int tam = Pacientes[info].Prontuarios.size() - 1;
-              Pacientes[info].Prontuarios[tam].addRemdios(ronme,rdosagem); 
+              Pacientes[info].Prontuarios[tam].addRemdios(rnome,rdosagem); 
             }
           }
         }
@@ -115,7 +115,7 @@ int main(int argc, char** argv){
       std::cout<< "> O que deseja listar:"<<"\npacientes ou prontuarios\n=> ";
       std::getline(std::cin,comando);
       
-      if(comando = "pacientes"){
+      if(comando == "pacientes"){
         std::cout<<">>Lista de pacientes: "<<std::endl;
         for(int i = 0 ; i<Pacientes.size();i++){
           Pacientes[i].Exibir();
@@ -123,13 +123,13 @@ int main(int argc, char** argv){
         }
       }
       if(comando == "prontuarios"){
-        std::cout<< "Digite o CPF do paciente\n=> "
+        std::cout<< "Digite o CPF do paciente\n=> ";
         
         std::string cnpjoto;
-        std::geline(std::cin, cnpjoto);
+        std::getline(std::cin,cnpjoto);
 
+        bool acho = false; 
         for(size_t i=0; i < Pacientes.size(); i++){
-          bool acho = false; 
           if(cnpjoto == Pacientes[i].CPF){
             Pacientes[i].MostrarProntuarios;
             acho == true;
@@ -174,7 +174,7 @@ int main(int argc, char** argv){
       nlohmann::json obj = nlohmann::json::parse(temp);
 
       for(auto& PacientesJson : obj["Pacientes"]){
-        Pacientes.emplace(PacientesJson);
+        Pacientes.emplace_back(PacientesJson);
       }
       std::cout<<"Informacoes carregadas com sucesso!"<<std::endl;
     }
