@@ -13,7 +13,6 @@ struct Prontuario{
 
   nlohmann::json serializar();
 
-  void Exibir();
   void addRemdios(std::string iremedio,std::string idose);
 
 };

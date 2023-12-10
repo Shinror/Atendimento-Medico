@@ -52,7 +52,16 @@ void Paciente::Exibir(){
 void Paciente::MostrarProntuarios(){
   std::cout<<"> Prontuarios do "<< Nome <<std::endl;
   for(size_t i = 0 ; i < Prontuarios.size(); i++){
-    Prontuarios[i].Exibir();
+    std::cout<< "Motivo da consulta :"<< Prontuarios[i].MotivoConsulta<<std::endl;
+    std::cout<<"Sinais Apresentados: "<< Prontuarios[i].Sinais<<std::endl;
+    std::cout<< "Diagnostico: "<< Prontuarios[i].Diagnostico<<std::endl;
+    std::cout<< "Observaçao : "<< Prontuarios[i].Observacao<<std::endl;
+    std::cout<< "Dia da consulta: "<< Prontuarios[i].DiaDaConsulta<<std::endl;
+    std::cout<< "\nCodigo do Prontuario:"<< Prontuarios[i].Codigo<<std::endl;
+    std::cout<<"Prescrição :"<<std::endl; 
+    for(size_t i=0;i<Remedios.size(); i++){
+      std::cout<< Prontuarios[i].Remedios[i] <<" "<< Prontuarios[i].Doses[i]<<std::endl;
+    }
     std::cout<<"--------------------------"<<std::endl;
   }
 }

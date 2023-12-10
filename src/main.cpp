@@ -129,16 +129,18 @@ int main(int argc, char** argv){
         std::getline(std::cin,cnpjoto);
 
         bool acho = false; 
-        for(size_t i=0; i < Pacientes.size(); i++){
+        int aaa;
+        for(int i = 0; i < Pacientes.size(); i++){
           if(cnpjoto == Pacientes[i].CPF){
-            Pacientes[i].MostrarProntuarios;
             acho == true;
+            aaa = i;
             break;
           }
         }
         if(! acho){
           std::cout<<"Nenhum Paciente com esse CPF encontrado"<<std::endl;
         }
+        Pacientes[aaa].MostrarProntuarios;
       }
     }
     if(comando == "salvar"){
