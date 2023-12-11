@@ -1,9 +1,10 @@
 #include "json.hpp"
+#include "remedio.h"
 #include <vector>
 
 struct Prontuario{
   std::string MotivoConsulta, Sinais,Diagnostico, Observacao, DiaDaConsulta; 
-  std::vector<std::string> Remedios,Doses;
+  std::vector<Remedio> Prescricao;
   long int Codigo;
 
   Prontuario() = default;
@@ -13,7 +14,6 @@ struct Prontuario{
 
   nlohmann::json serializar();
 
-  void Exibir();
   void addRemdios(std::string iremedio,std::string idose);
-
+  void Exibir();
 };

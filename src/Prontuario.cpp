@@ -34,58 +34,45 @@ Prontuario::Prontuario(nlohmann::json obj){//deserializar
   Observacao =obj["Observação"];
   DiaDaConsulta = obj["Dia da consulta"];
   Codigo = obj["Codigo do Prontuario"];
-  /*
-  for (size_t i = 0; i < obj["Remedios"]; i++)//! ver com o professor
-  {
-    Remedios.push_back(obj[{"Remedios",[i]}]);
+  
+  for(auto& prec : obj["Prescricao"]){
+    Prescricao.emplace_back(prec);
   }
-  for (size_t i = 0; i < obj["Doses"]; i++)
-  {
-    Doses.push_back(obj{"Doses":[i]});
-  }*/
-
+  
 
 }
 
 nlohmann::json Prontuario::serializar(){
-    nlohmann::json obj;
-    obj["Motivo da Consulta"] =MotivoConsulta;
-    obj["Sinais"] = Sinais;
-    obj["Diagnostico"] = Diagnostico;
-    obj["Observação"] = Observacao;
-    obj["Dia da consulta"] = DiaDaConsulta;
-    obj["Codigo do Prontuario"] = Codigo;
+  nlohmann::json obj;
+  obj["Motivo da Consulta"] =MotivoConsulta;
+  obj["Sinais"] = Sinais;
+  obj["Diagnostico"] = Diagnostico;
+  obj["Observação"] = Observacao;
+  obj["Dia da consulta"] = DiaDaConsulta;
+  obj["Codigo do Prontuario"] = Codigo;
 
-    obj["Remedios"] = nlohmann::json::array();
-    for(size_t i = 0;i<Remedios.size();i++){
-      obj["Remedios"].push_back(Remedios[i]);
-    }
-
-    obj["Doses"] = nlohmann::json::array();
-    for(size_t i = 0;i<Doses.size();i++){
-      obj["Doses"].push_back(Doses[i]);
-    }
-
-
-    return obj;
+  obj["Precricao"] = nlohmann::json::array();
+  for(size_t i = 0 ; i < Prescricao.size(); i++){
+    obj["Prescricao"].push_back(Prescricao[i].serializar());
+  }
+  
+  return obj;
 }
 
 void Prontuario::Exibir(){
-  std::cout<< "Motivo da consulta :"<<MotivoConsulta<<std::endl;
+  std::cout<< "Motivo da consulta :"<< MotivoConsulta<<std::endl;
   std::cout<<"Sinais Apresentados: "<< Sinais<<std::endl;
-  std::cout<< "Diagnostico: "<<Diagnostico<<std::endl;
+  std::cout<< "Diagnostico: "<< Diagnostico<<std::endl;
   std::cout<< "Observaçao : "<< Observacao<<std::endl;
-  std::cout<< "Dia da consulta: "<<DiaDaConsulta<<std::endl;
-  std::cout<< "\nCodigo do Prontuario:"<<Codigo<<std::endl;
-  std::cout<<"Prescrição :"<<std::endl; 
-  for(size_t i=0;i<Remedios.size(); i++){
-    std::cout<< Remedios[i]<<" "<<Doses[i]<<std::endl;
+  std::cout<< "Dia da consulta: "<< DiaDaConsulta<<std::endl;
+  std::cout<< "\nCodigo do Prontuario:"<< Codigo<<std::endl;
+  std::cout<<"Prescrição :"<<std::endl;
+  for(size_t i =0 ; i < Prescricao.size(); i++){
+    Prescricao[i].Exibir();
   }
-  
-}
 
+}
 void Prontuario::addRemdios(std::string iremedio,std::string idose){
-  Remedios.push_back(iremedio);
-  Doses.push_back(idose);
+  Prescricao.emplace_back(iremedio,idose);
 }
 
