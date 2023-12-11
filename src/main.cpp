@@ -9,7 +9,7 @@
 int main(int argc, char** argv){
   std::vector<Paciente> Pacientes;
 
-  std::cout<<"Bem-Vindo ao sistema de atendimento médico"<<"\n=> ";
+  std::cout<<"Bem-Vindo ao sistema de atendimento médico"<<std::endl;
 
   while(true){
     std::cout<<">Digite um comando, caso nao os conheca digite'ajuda':"<<"\n=> ";
@@ -84,33 +84,40 @@ int main(int argc, char** argv){
 
           Pacientes[info].Prontuarios.emplace_back(mutivo, sinal, diag, obs);
 
-            std::cout<<">>> Area da prescrição"<<std::endl;
-          while(true){
-            std::cout<< "Deseja adicionar um remedio [s,n]";
-            char afirma;
-            std::cin>>afirma;
+          std::cout<<">>> Area da prescrição"<<std::endl;
+          bool continua = true;
+          while(continua){
+            std::cout<< "Deseja adicionar um remedio [s,n]\n=>";
+            std::string afirma;
+            std::getline(std::cin,afirma);
 
-            if(afirma == 'n' or afirma == 'N'){
-              break;
+            if(afirma == "n" or afirma == "N"){
+            continua = false;
             }
-            else{
+            else if(afirma == "s" or afirma == "S"){
               std::cout<<"Escreva o nome do remedio \n=>";
               
-              std::string rnome;
+              std::string rnome = " ";
               std::getline(std::cin,rnome);
+              if(rnome != " "){
+                std::cout<<"Escreva a dosagem do remedio\n=>";
 
-              std::cout<<"Escreva a dosagem do remedio\n=>";
+                std::string rdosagem;
+                std::getline(std::cin,rdosagem);
+                
+                
+                int tam = Pacientes[info].Prontuarios.size() - 1;
+                Pacientes[info].Prontuarios[tam].addRemdios(rnome,rdosagem); 
+                
 
-              std::string rdosagem;
-              std::getline(std::cin,rdosagem);
-              
-              int tam = Pacientes[info].Prontuarios.size() - 1;
-              Pacientes[info].Prontuarios[tam].addRemdios(rnome,rdosagem); 
-            }
-          }
-        }
-      }
+
+              }//if antbug
+            }//if nome remdio
+          }//while area remedio
+        }//paciente encontrado
+      }//comando 
     }
+    
     if(comando == "listar"){
       std::cout<< "> O que deseja listar:"<<"\npacientes ou prontuarios\n=> ";
       std::getline(std::cin,comando);
@@ -129,22 +136,22 @@ int main(int argc, char** argv){
         std::getline(std::cin,cnpjoto);
 
         bool acho = false; 
-        int aaa;
         for(int i = 0; i < Pacientes.size(); i++){
           if(cnpjoto == Pacientes[i].CPF){
-            acho == true;
-            aaa = i;
+            Pacientes[i].MostrarProntuarios();
+            acho = true;
             break;
           }
         }
         if(! acho){
           std::cout<<"Nenhum Paciente com esse CPF encontrado"<<std::endl;
         }
-        Pacientes[aaa].MostrarProntuarios;
+        
       }
     }
     if(comando == "salvar"){
-      nlohmann::json obj =  nlohmann::json::array();
+      nlohmann::json obj;
+      obj["Pacientes"] =  nlohmann::json::array();
       
       for(size_t i =0 ; i < Pacientes.size(); i++){
         obj["Pacientes"].push_back(Pacientes[i].serializar());
@@ -152,7 +159,7 @@ int main(int argc, char** argv){
 
       std::ofstream dumper;
 
-      dumper.open("../src/data.json");
+      dumper.open("../data/data.json");
       if(! dumper){
         std::cout<<"Não foi possivel salvar o arquivo !";
         return 1;
@@ -163,7 +170,7 @@ int main(int argc, char** argv){
       std::cout<<"Arquivos salvos com sucesso!"<<std::endl;
     }
     if(comando == "carregar"){
-      std::ifstream file("../src/data.json");
+      std::ifstream file("../data/data.json");
 
       if(! file){
         std::cout<<"Arquivo não encontrado"<<std::endl;
@@ -196,5 +203,6 @@ int main(int argc, char** argv){
 
 
 
+  
   return 0;
 }
