@@ -21,5 +21,5 @@ nlohmann::json Remedio::serializar(){
 }
 
 void Remedio::Exibir(){
-  std::cout<< "Nome do Remedio : "<< Nome<< "\nDosagem: "<<Doses; 
+  std::cout<< "Nome do Remedio : "<< Nome<< "\nDosagem: "<<Doses<<std::endl; 
 }
