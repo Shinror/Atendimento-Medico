@@ -37,7 +37,7 @@ int main(int argc, char** argv){
         std::cout<<"cpf : "<<std::endl;
         std::getline(std::cin,icpf);
         
-        std::cout<<"born : "<<std::endl;
+        std::cout<<"Data de nascimento : "<<std::endl;
         std::getline(std::cin,idatanascimeno);
         
         std::cout<<"alergias : "<<std::endl;
@@ -259,7 +259,7 @@ int main(int argc, char** argv){
       std::cout<<"Arquivos dos pacientes salvos com sucesso!!"<<std::endl<<"Salvando estoque, pode levar um tempo...\n";
       
       nlohmann::json objArmazem;
-      
+      objArmazem["Armazem"] = nlohmann::json::array();
 
       std::ofstream ArquivoArmazem;
       ArquivoArmazem.open("../data/Armazem.json");

@@ -27,6 +27,7 @@ nlohmann::json Estoque::serializar(){
     obj["Remedios"].push_back(Remedios[i].serializar());
     obj["quantidade no estoque"].push_back(quantidade);
   }
+  return obj;
 }
 void Estoque::registro(std::string Rnome, std::string Rdose,int Rquantidade){
   Remedios.emplace_back(Rnome,Rdose);
@@ -42,9 +43,9 @@ void Estoque::encontrar(std::string Liniciais){
     std::string rnome = Remedios[i].Nome;
     if(Liniciais[0] == rnome[0] and Liniciais[1] == rnome[1] and Liniciais[2] == rnome[2]){
       Remedios[i].Exibir();
-      std::cout<<"\nQuantidade de caixas em estoque : "<<quantidade[i]<<"-----------------------------";
-
+      std::cout<<"\nQuantidade de caixas em estoque : "<<quantidade[i]<<"\n-----------------------------";
       acho == true;
+      break;
     }//if comparacao 
   }
   if(! acho){

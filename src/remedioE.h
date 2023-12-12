@@ -1,10 +1,10 @@
 #include "json.hpp"
 
-struct Remedio{
+struct RemedioE{
   std::string Nome, Doses;
 
-  Remedio(std::string nome,std::string dose);
-  Remedio(nlohmann::json obj);
+  RemedioE(std::string nome,std::string dose);
+  RemedioE(nlohmann::json obj);
 
   nlohmann::json serializar();
 
