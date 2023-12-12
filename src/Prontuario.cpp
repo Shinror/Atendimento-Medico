@@ -69,6 +69,7 @@ void Prontuario::Exibir(){
   std::cout<<"Prescrição :"<<std::endl;
   for(size_t i =0 ; i < Prescricao.size(); i++){
     Prescricao[i].Exibir();
+    std::cout<< std::endl;
   }
 
 }

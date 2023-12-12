@@ -3,4 +3,4 @@ project (MyProject)
 
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 
-add_executable(app src/main.cpp src/Paciente.cpp src/Prontuario.cpp src/remedio.cpp)
+add_executable(app src/main.cpp src/Paciente.cpp src/Prontuario.cpp src/remedio.cpp src/Estoque.cpp)

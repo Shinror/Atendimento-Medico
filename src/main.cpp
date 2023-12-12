@@ -5,6 +5,7 @@
 
 #include "json.hpp"
 #include "Paciente.h"
+#include "Estoque.h"
 
 int main(int argc, char** argv){
   std::vector<Paciente> Pacientes;
@@ -159,7 +160,7 @@ int main(int argc, char** argv){
 
       std::ofstream dumper;
 
-      dumper.open("../data/data.json");
+      dumper.open("../data/Paciente.json");
       if(! dumper){
         std::cout<<"Não foi possivel salvar o arquivo !";
         return 1;
@@ -170,7 +171,7 @@ int main(int argc, char** argv){
       std::cout<<"Arquivos salvos com sucesso!"<<std::endl;
     }
     if(comando == "carregar"){
-      std::ifstream file("../data/data.json");
+      std::ifstream file("../data/Paciente.json");
 
       if(! file){
         std::cout<<"Arquivo não encontrado"<<std::endl;
