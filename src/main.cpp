@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <cstdlib>
 
 
 #include "json.hpp"
@@ -9,6 +10,7 @@
 
 int main(int argc, char** argv){
   std::vector<Paciente> Pacientes;
+  Estoque Armazem("oi");
 
   std::cout<<"Bem-Vindo ao sistema de atendimento médico"<<std::endl;
 
@@ -116,8 +118,8 @@ int main(int argc, char** argv){
             }//if nome remdio
           }//while area remedio
         }//paciente encontrado
-      }//comando 
-    }
+      }//comando prontuario
+    }//comando adicionar
     
     if(comando == "listar"){
       std::cout<< "> O que deseja listar:"<<"\npacientes ou prontuarios\n=> ";
@@ -150,6 +152,92 @@ int main(int argc, char** argv){
         
       }
     }
+
+
+    if(comando == "estoque"){
+      std::cout<<"Area de Gerenciamento do Estoque\n";
+
+      if( Armazem.Nome != "oi"){
+        Estoque Armazem("oi");
+      }
+      while (true)
+      {
+        std::cout<<"> O que deseja fazer:  \nnovo, listar, encontrar, caixas, sair\n=>";
+
+        std::string comandoE;
+        std::getline(std::cin, comandoE);
+
+        if(comandoE =="novo"){
+          std::cout<<"Escreva o nome do remedio: \n=>";
+          
+          std::string nominho;
+          std::getline(std::cin,nominho);
+
+          std::cout<<"Escreva a dosagem do remedio: \n=>";
+
+          std::string dosinha;
+          std::getline(std::cin, dosinha);
+
+          std::cout<<"Escreva a quantidade de caixas: \n=>";
+
+          int qunti = -1;
+          std::cin>>qunti;
+
+          if(qunti != -1)
+          Armazem.registro(nominho, dosinha, qunti);
+        }//if novo estoque
+        if(comandoE == "listar")
+          Armazem.listar();
+        
+        if(comandoE == "encontrar"){
+          std::cout<<"Digite as três primeiras letra doremedio:\n=>";
+          
+          std::string Letras;
+          std::getline(std::cin,Letras);
+          Armazem.encontrar(Letras);
+        }
+        if(comandoE == "caixas"){
+
+          std::cout<<">>Gerenciamento de caixas de remedio\n O que deseja fazer: adicionar, remover: \n=>";
+          std::getline(std::cin, comandoE);
+
+          if(comandoE == "adicionar"){
+            std::cout<<"Escreva o nome do remedio: \n=>";
+            
+            std::string nominho;
+            std::getline(std::cin,nominho);
+            
+            std::cout<<"Escreva a dosagem do remedio: \n=>";
+
+            std::string dosinha;
+            std::getline(std::cin, dosinha);
+
+            if(! Armazem.adicionarqtd(nominho,dosinha))
+              std::cout<<"Use o comando encontrar para ver se nenhum erro de digitação ocorreu."<<std::endl;
+          }//if adicinar
+          if(comandoE == "remover"){
+            std::cout<<"Escreva o nome do remedio: \n=>";
+            
+            std::string nominho;
+            std::getline(std::cin,nominho);
+            
+            std::cout<<"Escreva a dosagem do remedio: \n=>";
+
+            std::string dosinha;
+            std::getline(std::cin, dosinha);
+
+            if(! Armazem.usar(nominho,dosinha))
+              std::cout<<"Use o comando encontrar para ver se nenhum erro de digitação ocorreu."<<std::endl;
+          }
+        }//if caixas
+        if(comandoE =="sair"){
+          break;
+        }
+      }//while
+    }//if estoque
+
+
+
     if(comando == "salvar"){
       nlohmann::json obj;
       obj["Pacientes"] =  nlohmann::json::array();
@@ -168,7 +256,25 @@ int main(int argc, char** argv){
 
       dumper << obj.dump();
       dumper.close();
-      std::cout<<"Arquivos salvos com sucesso!"<<std::endl;
+      std::cout<<"Arquivos dos pacientes salvos com sucesso!!"<<std::endl<<"Salvando estoque, pode levar um tempo...\n";
+      
+      nlohmann::json objArmazem;
+      
+
+      std::ofstream ArquivoArmazem;
+      ArquivoArmazem.open("../data/Armazem.json");
+      
+      if(! ArquivoArmazem){
+        std::cout<<"Não foi possivel salvar o arquivo!";
+        return 1;
+      }
+    
+      objArmazem["Armazem"] = Armazem.serializar();
+      
+      ArquivoArmazem << objArmazem.dump();
+      ArquivoArmazem.close();
+
+      std::cout<<"Estoque salvo com sucesso!!"<<std::endl;
     }
     if(comando == "carregar"){
       std::ifstream file("../data/Paciente.json");
@@ -186,11 +292,37 @@ int main(int argc, char** argv){
       for(auto& PacientesJson : obj["Pacientes"]){
         Pacientes.emplace_back(PacientesJson);
       }
-      std::cout<<"Informacoes carregadas com sucesso!"<<std::endl;
+      file.close();
+      std::cout<<"Informacoes dos pacientes carregadas com sucesso!"<<std::endl<<"Carregando estoque, pode levar um tempo\n";
+
+      file.open("../data/Armazem.json");
+
+      if(!file){
+        std::cout<<"Arquivo não encontrado"<<std::endl;
+        return 1;
+      }
+
+      std::getline(file,temp);
+
+      nlohmann::json amz = nlohmann::json::parse(temp);
+
+         Estoque Armazem(temp);//!ver com o professor
+        
+      
+      file.close();
+      std::cout<<"Estoque carregado com sucesso!!"<<std::endl;
+
     }
+
+    if(comando == "limpar"){
+      std::system("cls"); 
+      std::system("clear");
+    }
+
     if(comando == "ajuda"){
-      std::cout<<"> Os comando possiveis são :"<<"\n adicionar, listar, salvar, carregar, sair"<<std::endl; 
+      std::cout<<"> Os comando possiveis são :"<<"\n adicionar, listar, estoque, limpar, salvar, carregar, sair"<<std::endl; 
     }
+
     if(comando == "sair"){
       break;
     }//*caba com o  codigo
@@ -199,11 +331,5 @@ int main(int argc, char** argv){
 
 
   }
-
-
-
-
-
-  
   return 0;
 }
