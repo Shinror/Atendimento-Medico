@@ -7,7 +7,7 @@
 struct Estoque{
   std::string Nome;
   std::vector<RemedioE> Remedios;
-  std::vector<int>quantidade;
+
 
   
   Estoque(std::string nome);

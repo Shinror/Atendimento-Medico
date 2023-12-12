@@ -258,6 +258,7 @@ int main(int argc, char** argv){
       dumper.close();
       std::cout<<"Arquivos dos pacientes salvos com sucesso!!"<<std::endl<<"Salvando estoque, pode levar um tempo...\n";
       
+      //arquivo armazem
       nlohmann::json objArmazem;
       objArmazem["Armazem"] = nlohmann::json::array();
 
@@ -276,6 +277,7 @@ int main(int argc, char** argv){
 
       std::cout<<"Estoque salvo com sucesso!!"<<std::endl;
     }
+    
     if(comando == "carregar"){
       std::ifstream file("../data/Paciente.json");
 
@@ -294,7 +296,7 @@ int main(int argc, char** argv){
       }
       file.close();
       std::cout<<"Informacoes dos pacientes carregadas com sucesso!"<<std::endl<<"Carregando estoque, pode levar um tempo\n";
-
+    
       file.open("../data/Armazem.json");
 
       if(!file){
@@ -303,12 +305,16 @@ int main(int argc, char** argv){
       }
 
       std::getline(file,temp);
+      std::cout<<temp;
 
-      nlohmann::json amz = nlohmann::json::parse(temp);
+      nlohmann::json obj2 ;
+      obj2["Armazem"]= nlohmann::json::parse(temp);
 
-         Estoque Armazem(temp);//!ver com o professor
+    
+      auto& ArmazemJson = obj2["Armazem"];
+      Estoque Armazem(ArmazemJson);//!ver com o professor
+     
         
-      
       file.close();
       std::cout<<"Estoque carregado com sucesso!!"<<std::endl;
 

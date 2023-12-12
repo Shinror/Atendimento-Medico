@@ -8,30 +8,21 @@ Estoque::Estoque(std::string nome)
 {}
 
 Estoque::Estoque(nlohmann::json& obj){
-  Nome = obj["Nome do Estoque"];
   for(auto& RemediosJson : obj["Remedios"]){
     Remedios.emplace_back(RemediosJson);
-  }
-  for(auto quantidadejson : obj["quantidade no estoque"]){//!ver com o professor
-    quantidade.push_back(quantidadejson);
   }
 }
 
 nlohmann::json Estoque::serializar(){
   nlohmann::json obj;
-
-  obj["Nome do estoque"] = Nome;
   obj["Remedios"] = nlohmann::json::array();
-  obj["quantidade no estoque"] = nlohmann::json::array();
   for(size_t i = 0 ; i < Remedios.size(); i++){
     obj["Remedios"].push_back(Remedios[i].serializar());
-    obj["quantidade no estoque"].push_back(quantidade);
   }
   return obj;
 }
 void Estoque::registro(std::string Rnome, std::string Rdose,int Rquantidade){
-  Remedios.emplace_back(Rnome,Rdose);
-  quantidade.push_back(Rquantidade);
+  Remedios.emplace_back(Rnome,Rdose,Rquantidade);
 }
 
 void Estoque::encontrar(std::string Liniciais){
@@ -43,7 +34,7 @@ void Estoque::encontrar(std::string Liniciais){
     std::string rnome = Remedios[i].Nome;
     if(Liniciais[0] == rnome[0] and Liniciais[1] == rnome[1] and Liniciais[2] == rnome[2]){
       Remedios[i].Exibir();
-      std::cout<<"\nQuantidade de caixas em estoque : "<<quantidade[i]<<"\n-----------------------------";
+      std::cout<<"-----------------------------";
       acho == true;
       break;
     }//if comparacao 
@@ -55,38 +46,38 @@ void Estoque::encontrar(std::string Liniciais){
 
 
 void Estoque::listar(){
-  std::cout<<"-----------------------------";
+  std::cout<<"-----------------------------\n";
   for(size_t i = 0; i < Remedios.size();i++){
     Remedios[i].Exibir();
-    std::cout<< "\nQuantidade caixas em estoque: "<< quantidade[i]<<"-----------------------------";
+    std::cout<< "-----------------------------";
   }
 }
 
 bool Estoque::adicionarqtd(std::string inptnome,std::string inptdose){
-  int posicao;
-  bool find = false;
+  int posicao = -1;
+
+  
   for(int i = 0 ; i< Remedios.size(); i++){
     if(Remedios[i].Nome == inptnome and Remedios[i].Doses == inptdose){
       posicao = i;
-      find = true;
+ 
       break;
     }
   }
-  if(!find){
+  if(posicao == -1){
     std::cout<<"Remedio não foi encontrado!"<<std::endl;
     return false;    
   }
 
   Remedios[posicao].Exibir();
-  std::cout<<"Quantidade de caixas no estoque: "<< quantidade[posicao] <<std::endl;
 
   std::cout<<"Digite a quantidade de caixas novas: "<<std::endl;
   int add;
   std::cin>>add;
 
-  quantidade[posicao] += add;
+  Remedios[posicao].quantidade += add;
 
-  std::cout<<"Quantidade nova de caixas: "<< quantidade[posicao]<<"\n";
+  std::cout<<"Quantidade nova de caixas: "<< Remedios[posicao].quantidade <<"\n";
   return true;
 
 }
@@ -106,15 +97,14 @@ bool Estoque::usar(std::string inptnome,std::string inptdose){
   }
 
   Remedios[posicao].Exibir();
-  std::cout<<"Quantidade de caixas no estoque: "<< quantidade[posicao] <<std::endl;
 
   std::cout<<"Digite a quantidade de caixas que foram entregues: "<<std::endl;
   int remov;
   std::cin>>remov;
 
-  quantidade[posicao] -= remov;
+  Remedios[posicao].quantidade -= remov;
 
-  std::cout<<"Quantidade nova de caixas: "<< quantidade[posicao]<<"\n";
+  std::cout<<"Quantidade nova de caixas: "<< Remedios[posicao].quantidade<<"\n";
   return true;
 
 }

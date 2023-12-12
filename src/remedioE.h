@@ -2,8 +2,9 @@
 
 struct RemedioE{
   std::string Nome, Doses;
-
-  RemedioE(std::string nome,std::string dose);
+  int quantidade;
+  
+  RemedioE(std::string nome,std::string dose,int quantidade);
   RemedioE(nlohmann::json obj);
 
   nlohmann::json serializar();
